@@ -1,0 +1,27 @@
+policy_module(aws_eic, 1.0.0)
+
+########################################
+#
+# Declarations
+#
+
+type aws_eic_t;
+type aws_eic_exec_t;
+application_domain(aws_eic_t, aws_eic_exec_t)
+
+# When sshd executes a script labeled aws_eic_exec_t, transition into  aws_eic_t domain
+optional_policy(`
+  gen_require(`
+    type sshd_t;
+  ')
+
+  domtrans_pattern(sshd_t, aws_eic_exec_t, aws_eic_t)
+')
+
+########################################
+#
+# aws_eic local policy
+#
+
+allow aws_eic_t aws_eic_exec_t:file { execute_no_trans mmap_exec_file_perms };
+allow aws_eic_t self:unix_stream_socket create_stream_socket_perms;
