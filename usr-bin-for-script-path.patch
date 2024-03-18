@@ -1,0 +1,22 @@
+From 86e5d50735a2b091db9a1d20ec52956d32efd09d Mon Sep 17 00:00:00 2001
+From: Major Hayden <major@redhat.com>
+Date: Thu, 15 Feb 2024 15:24:58 -0600
+Subject: [PATCH] Use /usr/bin for script path
+
+Signed-off-by: Major Hayden <major@redhat.com>
+---
+ src/rpm_systemd/sshd.service.d/ec2-instance-connect.conf | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/rpm_systemd/sshd.service.d/ec2-instance-connect.conf b/src/rpm_systemd/sshd.service.d/ec2-instance-connect.conf
+index 2d23557..876168d 100644
+--- a/src/rpm_systemd/sshd.service.d/ec2-instance-connect.conf
++++ b/src/rpm_systemd/sshd.service.d/ec2-instance-connect.conf
+@@ -1,3 +1,3 @@
+ [Service]
+ ExecStart=
+-ExecStart=/usr/sbin/sshd -D -o "AuthorizedKeysCommand /opt/aws/bin/eic_run_authorized_keys %%u %%f" -o "AuthorizedKeysCommandUser ec2-instance-connect" $SSHD_OPTS
++ExecStart=/usr/sbin/sshd -D -o "AuthorizedKeysCommand /usr/bin/eic_run_authorized_keys %%u %%f" -o "AuthorizedKeysCommandUser ec2-instance-connect" $SSHD_OPTS
+-- 
+2.43.1
+
